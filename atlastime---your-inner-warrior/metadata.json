@@ -1,0 +1,9 @@
+
+{
+  "name": "AtlasTime - Your Inner Warrior",
+  "description": "A habit-tracking app that gamifies your journey to quit bad habits. Watch your inner Spartan soldier grow from an infant to a legendary warrior as you maintain your streaks.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
