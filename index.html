@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="description" content="Forge your discipline with AtlasTime.">
     
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3233/3233481.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -74,12 +74,12 @@
 </head>
 <body>
     <div id="root"></div>
-    <!-- Point d'entrée de l'application -->
+    <!-- Vite injectera automatiquement le script ici lors du build -->
     <script type="module" src="/index.tsx"></script>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.worker = navigator.serviceWorker.register('/sw.js').catch(err => {
+          navigator.serviceWorker.register('/sw.js').catch(err => {
             console.log('SW registration ignored');
           });
         });
