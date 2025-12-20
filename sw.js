@@ -1,9 +1,7 @@
-
-const CACHE_NAME = 'atlastime-v2';
+const CACHE_NAME = 'atlastime-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './index.tsx',
   './manifest.json',
   'https://cdn.tailwindcss.com',
   'https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap'
@@ -30,10 +28,10 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
+    // Utilisation de ignoreSearch pour que ?view=widget soit servi par le cache de index.html
+    caches.match(event.request, { ignoreSearch: true }).then((response) => {
       return response || fetch(event.request).then((fetchResponse) => {
         return caches.open(CACHE_NAME).then((cache) => {
-          // Only cache same-origin resources or specific fonts/CDNs
           if (event.request.url.startsWith(self.location.origin) || event.request.url.includes('fonts.gstatic.com')) {
             cache.put(event.request, fetchResponse.clone());
           }
@@ -41,8 +39,9 @@ self.addEventListener('fetch', (event) => {
         });
       });
     }).catch(() => {
-      // Fallback if both fail
-      return new Response("Offline mode active.");
+      if (event.request.mode === 'navigate') {
+        return caches.match('./index.html');
+      }
     })
   );
 });
