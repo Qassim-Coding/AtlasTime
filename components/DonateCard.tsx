@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Heart } from 'lucide-react';
 import { Theme, Language } from '../types';
@@ -12,13 +11,12 @@ interface DonateCardProps {
 const DonateCard: React.FC<DonateCardProps> = ({ theme, language }) => {
   const t = translations[language];
   
-  // Update these URLs with your actual donation links
-  const PAYPAL_URL = "https://www.paypal.me/yourusername";
-  const STRIPE_URL = "https://buy.stripe.com/yourlink";
+  // Utilisation du lien de paiement direct fourni
+  const PAYPAL_PAYMENT_URL = "https://www.paypal.com/ncp/payment/28ZX7MUC2LUA2"; 
 
   const handleDonate = () => {
-    // You can choose which one to open or show a choice
-    window.open(PAYPAL_URL, '_blank');
+    if (navigator.vibrate) navigator.vibrate(10);
+    window.open(PAYPAL_PAYMENT_URL, '_blank');
   };
 
   const cardBg = theme === 'dark' ? 'bg-slate-900/40 border-amber-500/20' : 'bg-white border-slate-200 shadow-sm';
