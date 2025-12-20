@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Theme, Language, Habit, SpartanStage } from '../types';
 import { translations } from '../translations';
@@ -43,8 +42,12 @@ const WidgetPreview: React.FC<WidgetPreviewProps> = ({ theme, language, habits, 
   };
 
   const copyWidgetUrl = () => {
-    const url = `${window.location.origin}${window.location.pathname}?view=widget`;
-    navigator.clipboard.writeText(url);
+    // Nettoyage de l'URL pour éviter les doubles slashes (ex: domain.com//?view=widget)
+    const baseUrl = window.location.origin + window.location.pathname;
+    const cleanUrl = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
+    const widgetUrl = `${cleanUrl}?view=widget`;
+    
+    navigator.clipboard.writeText(widgetUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
