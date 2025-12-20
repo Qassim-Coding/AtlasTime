@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Habit, ViewState, Language, Theme } from './types';
 import { translations } from './translations';
@@ -10,6 +9,7 @@ import AddHabitModal from './components/AddHabitModal';
 import HabitDetail from './components/HabitDetail';
 import WidgetPreview from './components/WidgetPreview';
 import WidgetViewOnly from './components/WidgetViewOnly';
+import Logo from './components/Logo';
 import { Plus, Globe, Moon, Sun, Terminal } from 'lucide-react';
 
 const STORAGE_KEY = 'atlas_time_habits';
@@ -112,8 +112,13 @@ const App: React.FC = () => {
   return (
     <div className={`flex flex-col h-full max-w-md mx-auto shadow-2xl overflow-hidden transition-colors duration-300 ${themeClasses}`}>
       <header className="pt-[calc(1.5rem+env(safe-area-inset-top))] p-6 pb-2">
-        <h1 className="text-3xl font-cinzel font-bold text-amber-500 tracking-wider uppercase">{t.appName}</h1>
-        <p className={`${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'} text-sm`}>{t.tagline}</p>
+        <div className="flex items-center gap-3">
+          <Logo size={42} />
+          <div>
+            <h1 className="text-3xl font-cinzel font-bold text-amber-500 tracking-wider uppercase leading-none">{t.appName}</h1>
+            <p className={`${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'} text-[10px] font-bold uppercase tracking-widest mt-1`}>{t.tagline}</p>
+          </div>
+        </div>
       </header>
 
       <main className="flex-1 overflow-y-auto px-6 py-4 pb-32">
