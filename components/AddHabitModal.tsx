@@ -1,12 +1,12 @@
-
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { Language } from '../types';
+import { Language, Theme } from '../types';
 import { translations } from '../translations';
 
 interface AddHabitModalProps {
   isOpen: boolean;
   language: Language;
+  theme: Theme;
   onClose: () => void;
   onAdd: (name: string, color: string, quitReason: string) => void;
 }
@@ -20,7 +20,7 @@ const COLORS = [
   '#ec4899', // pink
 ];
 
-const AddHabitModal: React.FC<AddHabitModalProps> = ({ isOpen, language, onClose, onAdd }) => {
+const AddHabitModal: React.FC<AddHabitModalProps> = ({ isOpen, language, theme, onClose, onAdd }) => {
   const t = translations[language];
   const [name, setName] = useState('');
   const [quitReason, setQuitReason] = useState('');
@@ -36,12 +36,15 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ isOpen, language, onClose
     }
   };
 
+  const modalBg = theme === 'dark' ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200';
+  const inputBg = theme === 'dark' ? 'bg-slate-800 border-slate-700 text-slate-100' : 'bg-slate-50 border-slate-200 text-slate-900';
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-6 sticky top-0 bg-slate-900 py-1 z-10">
+      <div className={`w-full max-w-sm ${modalBg} border rounded-3xl p-6 shadow-2xl animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto`}>
+        <div className={`flex justify-between items-center mb-6 sticky top-0 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'} py-1 z-10`}>
           <h2 className="text-xl font-cinzel text-amber-500">{t.addTitle}</h2>
-          <button onClick={onClose} className="p-1 text-slate-500 hover:text-white">
+          <button onClick={onClose} className="p-1 text-slate-500 hover:text-amber-500">
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -53,7 +56,7 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ isOpen, language, onClose
               autoFocus
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl p-4 text-slate-100 outline-none focus:border-amber-500 transition-colors"
+              className={`w-full ${inputBg} border rounded-xl p-4 outline-none focus:border-amber-500 transition-colors`}
               placeholder="..."
             />
           </div>
@@ -63,7 +66,7 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ isOpen, language, onClose
             <textarea 
               value={quitReason}
               onChange={(e) => setQuitReason(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl p-4 text-slate-100 outline-none focus:border-amber-500 transition-colors min-h-[100px]"
+              className={`w-full ${inputBg} border rounded-xl p-4 outline-none focus:border-amber-500 transition-colors min-h-[100px]`}
               placeholder="..."
             />
           </div>
@@ -76,7 +79,7 @@ const AddHabitModal: React.FC<AddHabitModalProps> = ({ isOpen, language, onClose
                   key={c}
                   onClick={() => setColor(c)}
                   className={`w-10 h-10 rounded-full transition-all ${
-                    color === c ? 'scale-125 ring-2 ring-white ring-offset-4 ring-offset-slate-900' : ''
+                    color === c ? `scale-125 ring-2 ${theme === 'dark' ? 'ring-white ring-offset-slate-900' : 'ring-slate-400 ring-offset-white'} ring-offset-4` : ''
                   }`}
                   style={{ backgroundColor: c }}
                 />
